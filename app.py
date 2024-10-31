@@ -37,5 +37,6 @@ def create_user():
     conn.close()
     return f"User {new_user} added successfully", 201
 
+
 if __name__ == '__main__':
     app.run(debug=True)
