@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-import psycopg2  # La importación "psycopg2"
+import psycopg2  # type: ignore # La importación "psycopg2"
 
 app = Flask(__name__)
 
