@@ -15,7 +15,7 @@ COPY game-store/ /app/game-store/
 EXPOSE 5000
 
 # Configurar la variable de entorno para Flask
-ENV FLASK_APP=game-store/util/apiAlchemy.py
+ENV FLASK_APP=game-store/apiAlchemy:create_api
 
 # Comando para ejecutar la aplicación
 CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
