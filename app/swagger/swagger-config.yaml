@@ -12,8 +12,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
-  - url: http://localhost:8000/api
-  - url: http://<your_aws_api_url>/api
+  - url: http://localhost:5000/api
 tags:
   - name: game
     description: Everything about Games

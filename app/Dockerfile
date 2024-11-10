@@ -8,16 +8,23 @@ WORKDIR /app
 COPY game-store/requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
-# Copiar solo el código fuente necesario de la aplicación
+# Copiar el código fuente necesario de la aplicación
 COPY game-store/ /app/game-store/
+
+# Copiar la carpeta de Swagger
+COPY swagger /app/swagger
 
 # Exponer el puerto en el que se va a ejecutar
 EXPOSE 5000
 
+# Configurar la variable de entorno para la URI de la base de datos
+ENV DATABASE_URI=postgresql://postgres:flaskroot@db/practica
+
 # Configurar la variable de entorno para Flask
-ENV FLASK_APP=game-store/apiAlchemy:create_api
+ENV FLASK_APP=game-store/initAlchemy.py
 
 # Comando para ejecutar la aplicación
-CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
+CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0", "--port=5000"]
+
 
 

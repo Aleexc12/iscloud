@@ -1,4 +1,4 @@
-CREATE USER aws WITH PASSWORD 'flaskroot';
+CREATE USER postgres WITH PASSWORD 'flaskroot';
 
-CREATE DATABASE practica OWNER aws;
+CREATE DATABASE practica OWNER postgres;
 \c practica

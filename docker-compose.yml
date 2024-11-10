@@ -3,9 +3,9 @@ version: '3.8'
 services:
   db:
     image: postgres
-    container_name: postgres_prac02
+    container_name: postgres_prac02_new
     environment:
-      POSTGRES_USER: aws
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: flaskroot
       POSTGRES_DB: practica
     networks:
@@ -15,12 +15,14 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    volumes:
+      - ./db/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql # Inicialización de la base de datos
 
   app:
     image: aleexc12/flask_prac02:1.0.1
-    container_name: flask_prac02
+    container_name: flask_prac02_new
     ports:
-      - "5001:5000"
+      - "5000:5000"
     environment:
       - DATABASE_URI=postgresql://postgres:flaskroot@db/practica
     networks:
@@ -28,12 +30,13 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    entrypoint: sh -c "sleep 5 && flask run --host=0.0.0.0"  # Añade un retraso de 5 segundos para dar tiempo a PostgreSQL
     healthcheck:
-      test: ["CMD-SHELL", "python3 -c \"import requests; import sys; r = requests.get('http://localhost:5000/'); sys.exit(0 if r.status_code == 200 else 1)\""]
+      test: ["CMD-SHELL", "curl -f http://localhost:5000 || exit 1"]
       interval: 5s
       timeout: 5s
       retries: 5
-    pull_policy: always
 
 networks:
   flask_network:
+
