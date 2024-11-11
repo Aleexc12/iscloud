@@ -3,7 +3,7 @@ version: '3.8'
 services:
   db:
     image: postgres
-    container_name: postgres_prac02_new
+    container_name: postgres_prac02
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: flaskroot
@@ -20,7 +20,7 @@ services:
 
   app:
     image: aleexc12/flask_prac02:1.0.1
-    container_name: flask_prac02_new
+    container_name: flask_prac02
     ports:
       - "5000:5000"
     environment:
@@ -32,7 +32,7 @@ services:
         condition: service_healthy
     entrypoint: sh -c "sleep 5 && flask run --host=0.0.0.0"  # Añade un retraso de 5 segundos para dar tiempo a PostgreSQL
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:5000 || exit 1"]
+      test: ["CMD-SHELL", "python -c \"import requests; import sys; r = requests.get('http://localhost:5000/swagger/index.html'); sys.exit(0 if r.status_code == 200 else 1)\""]
       interval: 5s
       timeout: 5s
       retries: 5
