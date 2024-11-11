@@ -29,6 +29,10 @@ def create_api():
     @api.route('/')
     def home():
         return redirect('/swagger/index.html')
+    
+    @api.route('/health')
+    def health_check():
+        return "OK", 200
 
     @api.route('/swagger')
     @api.route('/swagger/<path:path>')
