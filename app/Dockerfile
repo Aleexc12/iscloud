@@ -17,9 +17,6 @@ COPY swagger /app/swagger
 # Exponer el puerto en el que se va a ejecutar
 EXPOSE 5000
 
-# Configurar la variable de entorno para la URI de la base de datos
-ENV DATABASE_URI=postgresql://postgres:flaskroot@db/practica
-
 # Configurar la variable de entorno para Flask
 ENV FLASK_APP=game-store/initAlchemy.py
 

@@ -5,18 +5,16 @@ services:
     image: postgres
     container_name: postgres_prac02
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: flaskroot
       POSTGRES_DB: practica
+      POSTGRES_USER: aws
+      POSTGRES_PASSWORD: flaskroot
     networks:
       - flask_network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U aws -d practica"]
       interval: 5s
       timeout: 5s
       retries: 5
-    volumes:
-      - ./db/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql # Inicialización de la base de datos
 
   app:
     image: aleexc12/flask_prac02:1.0.1
@@ -24,7 +22,8 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - DATABASE_URI=postgresql://postgres:flaskroot@db/practica
+      - DATABASE_URI=postgresql://aws:flaskroot@db/practica
+
     networks:
       - flask_network
     depends_on:
@@ -39,4 +38,4 @@ services:
 
 networks:
   flask_network:
-
+    driver: bridge
