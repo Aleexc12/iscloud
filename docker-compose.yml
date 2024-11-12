@@ -17,19 +17,19 @@ services:
       retries: 5
 
   app:
-    image: aleexc12/flask_prac02:1.0.1
+    image: aleexc12/flask_prac02:1.0.4
     container_name: flask_prac02
     ports:
       - "5000:5000"
     environment:
       - DATABASE_URI=postgresql://aws:flaskroot@db/practica
-
+      - LOAD_BALANCER_URL=http://flask-balancer-prac02-1781190313.us-east-1.elb.amazonaws.com
     networks:
       - flask_network
     depends_on:
       db:
         condition: service_healthy
-    entrypoint: sh -c "sleep 5 && flask run --host=0.0.0.0"  # Añade un retraso de 5 segundos para dar tiempo a PostgreSQL
+    entrypoint: sh -c "sleep 5 && flask run --host=0.0.0.0"
     healthcheck:
       test: ["CMD-SHELL", "python -c \"import requests; import sys; r = requests.get('http://localhost:5000/swagger/index.html'); sys.exit(0 if r.status_code == 200 else 1)\""]
       interval: 5s

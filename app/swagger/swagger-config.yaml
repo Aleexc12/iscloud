@@ -13,6 +13,7 @@ info:
   version: 1.0.0
 servers:
   - url: http://localhost:5000/api
+  - url: http://flask-balancer-prac02-1781190313.us-east-1.elb.amazonaws.com/api
 tags:
   - name: game
     description: Everything about Games
